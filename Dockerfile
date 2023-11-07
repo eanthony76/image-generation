@@ -4,18 +4,25 @@ FROM nvidia/cuda:12.2.2-cudnn8-devel-ubuntu22.04
 # Set a label to describe the Dockerfile
 LABEL maintainer="eanthony"
 
-# Install Miniconda
-ENV MINICONDA_VERSION 4.10.1
-ENV CONDA_DIR /opt/conda
-ENV PATH $CONDA_DIR/bin:$PATH
+# Install Python 3.10 and pip
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    software-properties-common && \
+    add-apt-repository ppa:deadsnakes/ppa && \
+    apt-get update && \
+    apt-get install -y python3.10 python3.10-distutils && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    ln -s /usr/bin/python3.10 /usr/local/bin/python3 && \
+    ln -s /usr/bin/python3.10 /usr/local/bin/python && \
+    wget https://bootstrap.pypa.io/get-pip.py && \
+    python3.10 get-pip.py && \
+    rm get-pip.py
 
-# Install Miniconda in silent mode, install Python 3.8, and make sure the package is up to date
-RUN apt-get update && apt-get install -y wget && \
-    wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-py38_${MINICONDA_VERSION}-Linux-x86_64.sh -O ~/miniconda.sh && \
-    /bin/bash ~/miniconda.sh -b -p $CONDA_DIR && \
-    rm ~/miniconda.sh && \
-    conda install -y python=3.10 && \
-    conda clean -ya
+# Copy your requirements.txt file into the container
+COPY requirements.txt /tmp/
+
+# Install Python dependencies from the requirements file
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
 # Set the default command to run when starting the container
 CMD [ "/bin/bash" ]
