@@ -26,8 +26,6 @@ WORKDIR /stable-diffusion
 
 RUN chmod +x webui.sh
 
-RUN chown notroot:notroot webui.sh
-
 EXPOSE 7860
 
 RUN ./webui.sh -f
