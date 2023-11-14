@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
     libglib2.0-0 \
     && mkdir stable-diffusion \
     && cd stable-diffusion \
-    && wget -q https://raw.githubusercontent.com/AUTOMATIC1111/stable-diffusion-webui/master/webui.sh \
+    && wget -q https://raw.githubusercontent.com/AUTOMATIC1111/stable-diffusion-webui/master/webui.sh
 
 RUN pip3 install --upgrade pip
 RUN pip install xformers==0.0.16
