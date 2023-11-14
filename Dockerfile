@@ -17,7 +17,6 @@ RUN apt-get update && apt-get install -y \
     && mkdir stable-diffusion \
     && cd stable-diffusion \
     && wget -q https://raw.githubusercontent.com/AUTOMATIC1111/stable-diffusion-webui/master/webui.sh \
-    && useradd -m notroot
 
 RUN pip3 install --upgrade pip
 RUN pip install xformers==0.0.16
