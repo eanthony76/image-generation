@@ -21,6 +21,9 @@ RUN apt-get update && apt-get install -y \
 RUN pip3 install --upgrade pip
 RUN pip install xformers==0.0.16
 
+RUN curl -L https://huggingface.co/stabilityai/stable-diffusion-2-base/resolve/main/512-base-ema.safetensors --output SD2-512-base-ema.safetensors \
+    && mv SD2-512-base-ema.safetensors stable-diffusion-webui/models/Stable-diffusion/.
+
 WORKDIR /stable-diffusion
 
 RUN chmod +x webui.sh
